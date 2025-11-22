@@ -1,0 +1,5 @@
+LockMoveWorlds:
+  - exampleWorldName
+LockMoveTime: 15
+ControlWorlds:
+  - exampleWorldName
