@@ -1,0 +1,6 @@
+name: WorldSetting
+version: '1.0'
+main: top.mores.worldSetting.WorldSetting
+api-version: '1.20'
+authors: [ Mores ]
+description: PAPI
