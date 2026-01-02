@@ -1,5 +1,14 @@
-LockMoveWorlds:
-  - exampleWorldName
-LockMoveTime: 15
+# 进入世界时限制移动
+LockMove:
+  Worlds:
+    - exampleWorldName
+  Time: 15
+#禁止切换副手，禁止丢弃，禁止交互
 ControlWorlds:
   - exampleWorldName
+#禁止右键
+DoNotUse:
+  Tags:
+    - example
+  Worlds:
+    - exampleWorldName

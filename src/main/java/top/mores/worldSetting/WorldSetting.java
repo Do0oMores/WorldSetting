@@ -3,9 +3,11 @@ package top.mores.worldSetting;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import top.mores.worldSetting.Commands.WorldSettingsCommands;
 import top.mores.worldSetting.EventListener.WorldSettingsListener;
 
 import java.io.File;
+import java.util.Objects;
 
 public final class WorldSetting extends JavaPlugin {
 
@@ -19,6 +21,7 @@ public final class WorldSetting extends JavaPlugin {
         initConfig();
 
         this.getServer().getPluginManager().registerEvents(new WorldSettingsListener(),this);
+        Objects.requireNonNull(getCommand("wset")).setExecutor(new WorldSettingsCommands());
     }
 
     @Override

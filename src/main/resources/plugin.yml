@@ -1,6 +1,9 @@
 name: WorldSetting
-version: '1.0'
+version: '1.1'
 main: top.mores.worldSetting.WorldSetting
 api-version: '1.20'
 authors: [ Mores ]
-description: PAPI
+commands:
+  wset:
+    description: WorldSettings Command
+    usage: /wset <reload>

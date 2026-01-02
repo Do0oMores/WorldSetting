@@ -16,7 +16,7 @@ public class YamlFileTool {
      * @return worlds name list
      */
     public List<String> getLockMoveWorlds(){
-        return getConfig().getStringList("LockMoveWorlds");
+        return getConfig().getStringList("LockMove.Worlds");
     }
 
     /**
@@ -24,7 +24,7 @@ public class YamlFileTool {
      * @return time UNIT:s
      */
     public Integer getLockMoveTime(){
-        return getConfig().getInt("LockMoveTime");
+        return getConfig().getInt("LockMove.Time");
     }
 
     /**
@@ -33,5 +33,13 @@ public class YamlFileTool {
      */
     public List<String> getControlWorlds(){
         return getConfig().getStringList("ControlWorlds");
+    }
+
+    public List<String> getUseTags(){
+        return getConfig().getStringList("DoNotUse.Tags");
+    }
+
+    public List<String> getUseTagsWorlds(){
+        return getConfig().getStringList("DoNotUse.Worlds");
     }
 }
