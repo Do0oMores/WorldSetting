@@ -1,6 +1,7 @@
 package top.mores.worldSetting.EventListener;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -29,6 +30,11 @@ public class WorldSettingsListener implements Listener {
     private final Map<UUID,Long> joinTimes=new ConcurrentHashMap<>();
     private final Map<UUID, BukkitTask> removalTasks=new ConcurrentHashMap<>();
 
+    private boolean shouldIgnoreRestrictions(Player player) {
+        GameMode gameMode = player.getGameMode();
+        return gameMode == GameMode.CREATIVE || gameMode == GameMode.SPECTATOR;
+    }
+
     private void startRestrictionFor(Player p) {
         UUID id = p.getUniqueId();
         cancelRestrictionFor(p);
@@ -52,6 +58,7 @@ public class WorldSettingsListener implements Listener {
     @EventHandler
     public void onChangedWorld(PlayerChangedWorldEvent event) {
         Player player=event.getPlayer();
+        if (shouldIgnoreRestrictions(player)) return;
         if (yamlFileTool.getLockMoveWorlds().contains(player.getWorld().getName())) {
             startRestrictionFor(player);
         }else {
@@ -77,6 +84,7 @@ public class WorldSettingsListener implements Listener {
     @EventHandler
     public void controlPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
+        if (shouldIgnoreRestrictions(player)) return;
 
         if (!yamlFileTool.getLockMoveWorlds().contains(player.getWorld().getName())) return;
         if (!joinTimes.containsKey(player.getUniqueId())) return;
@@ -105,6 +113,7 @@ public class WorldSettingsListener implements Listener {
     @EventHandler
     public void onPlayerSwitchHand(PlayerSwapHandItemsEvent event) {
         Player player = event.getPlayer();
+        if (shouldIgnoreRestrictions(player)) return;
         if (!yamlFileTool.getLockMoveWorlds().contains(player.getWorld().getName())) return;
         event.setCancelled(true);
     }
@@ -112,6 +121,7 @@ public class WorldSettingsListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
+        if (shouldIgnoreRestrictions(player)) return;
         if (!yamlFileTool.getLockMoveWorlds().contains(player.getWorld().getName())) return;
         if (event.getSlot() == 40) {
             event.setCancelled(true);
@@ -121,6 +131,7 @@ public class WorldSettingsListener implements Listener {
     @EventHandler
     public void onPlayerDrop(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
+        if (shouldIgnoreRestrictions(player)) return;
         if (!yamlFileTool.getLockMoveWorlds().contains(player.getWorld().getName())) return;
         event.setCancelled(true);
     }
@@ -128,6 +139,7 @@ public class WorldSettingsListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        if (shouldIgnoreRestrictions(player)) return;
         if (!yamlFileTool.getLockMoveWorlds().contains(player.getWorld().getName())) return;
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         Block block = event.getClickedBlock();
@@ -140,6 +152,7 @@ public class WorldSettingsListener implements Listener {
     @EventHandler
     public void onUseItemWithLore(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        if (shouldIgnoreRestrictions(player)) return;
         if (!yamlFileTool.getUseTagsWorlds().contains(player.getWorld().getName())) return;
 
         Action action = event.getAction();
